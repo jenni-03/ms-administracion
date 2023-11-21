@@ -7,6 +7,7 @@ import com.administracion.repository.ExamenRepository;
 import com.administracion.service.ExamenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,9 @@ public class ExamenServiceImpl implements ExamenService {
 
     @Autowired
     private ExamenMapper examenMapper;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public List<ExamenDto> obtenerExamenes() {
