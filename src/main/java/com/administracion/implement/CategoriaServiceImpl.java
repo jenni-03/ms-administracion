@@ -2,6 +2,7 @@ package com.administracion.implement;
 
 import com.administracion.dto.CategoriaDto;
 import com.administracion.entity.Categoria;
+import com.administracion.entity.Examen;
 import com.administracion.mapper.CategoriaMapper;
 import com.administracion.repository.CategoriaRepository;
 import com.administracion.service.CategoriaService;
@@ -9,42 +10,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
-    @Override
-    public List<CategoriaDto> obtenerCategorias() {
-        return null;
-    }
 
     @Autowired
     private CategoriaRepository categoriaRepository;
 
     @Autowired
     private CategoriaMapper categoriaMapper;
+    @Override
+    public List<CategoriaDto> obtenerCategorias() {
+        List<Categoria> categorias = categoriaRepository.findAll();
+        return categorias.stream()
+                .map(categoriaMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public CategoriaDto obtenerCategoria(int id) {
-        //List<Categoria> categorias = categoriaRepository.findAll();
-        //return categorias.stream()
-                //.map(categoriaMapper::toDto)
-                //.collect(Collectors.toList());
-        return null;
+        Optional<Categoria> optionalCategoria = categoriaRepository.findById(id);
+
+        if (optionalCategoria.isPresent()) {
+            Categoria categoria = optionalCategoria.get();
+            return categoriaMapper.toDto(categoria);
+        }
+        else return null;
     }
 
     @Override
     public CategoriaDto guardarCategoria(CategoriaDto categoriaDto) {
-        return null;
+        Categoria categoria = categoriaMapper.toEntity(categoriaDto);
+        Categoria savedCategoria = null;
+        if (categoriaRepository.findById(categoria.getId()).isEmpty()) {
+            savedCategoria = categoriaRepository.save(categoria);
+        } else {
+            throw new RuntimeException("El examen ya existe");
+        }
+        return categoriaMapper.toDto(savedCategoria);
     }
 
     @Override
     public CategoriaDto editarCategoria(int id, CategoriaDto categoriaDto) {
-        return null;
+        Categoria categoriaFound = categoriaRepository.findById(id).get();
+        categoriaMapper.updateEntity(categoriaDto, categoriaFound);
+        Categoria savedCategoria = categoriaRepository.save(categoriaFound);
+        return categoriaMapper.toDto(savedCategoria);
     }
 
     @Override
     public boolean eliminarCategoria(int id) {
-        return false;
+        if (categoriaRepository.findById(id).isEmpty()){
+            return false;
+        }
+        categoriaRepository.deleteById(id);
+        return true;
     }
 }
