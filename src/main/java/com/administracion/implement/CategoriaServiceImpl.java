@@ -1,6 +1,7 @@
 package com.administracion.implement;
 
 import com.administracion.dto.CategoriaDto;
+import com.administracion.entity.Categoria;
 import com.administracion.mapper.CategoriaMapper;
 import com.administracion.repository.CategoriaRepository;
 import com.administracion.service.CategoriaService;
