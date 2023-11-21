@@ -11,5 +11,6 @@ public class ProblemaDto {
     private String docente;
     private String nombreBase;
     private boolean estado;
+    private CategoriaDto categoria;
 
 }

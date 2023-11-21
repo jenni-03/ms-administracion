@@ -32,4 +32,8 @@ public class Problema {
     @JsonIgnoreProperties("problema")
     @OneToMany(mappedBy = "problema", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tabla> tablas;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria")
+    private Categoria categoria;
 }
