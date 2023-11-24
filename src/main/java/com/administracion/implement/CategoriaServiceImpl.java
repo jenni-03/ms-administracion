@@ -1,6 +1,8 @@
 package com.administracion.implement;
 
 import com.administracion.dto.CategoriaDto;
+import com.administracion.dto.ProblemasXCategoriaDto;
+import com.administracion.dto.ProblemasXCategoriaProjection;
 import com.administracion.entity.Categoria;
 import com.administracion.entity.Examen;
 import com.administracion.mapper.CategoriaMapper;
@@ -9,6 +11,7 @@ import com.administracion.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,5 +70,18 @@ public class CategoriaServiceImpl implements CategoriaService {
         }
         categoriaRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<ProblemasXCategoriaDto> obtenerNumProblemasByCategoria() {
+        List<ProblemasXCategoriaProjection> projections = categoriaRepository.findProblemasByCategoria();
+        List<ProblemasXCategoriaDto> problemasByCategoriaDto = new ArrayList<>();
+
+        for (ProblemasXCategoriaProjection projection : projections) {
+            ProblemasXCategoriaDto dto = new ProblemasXCategoriaDto(projection.getCategoria(), projection.getCantidadProblemas());
+            problemasByCategoriaDto.add(dto);
+        }
+
+        return problemasByCategoriaDto;
     }
 }

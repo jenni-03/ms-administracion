@@ -42,4 +42,10 @@ public class CategoriaController {
         }
         return new ResponseEntity<>(categoriaUpdated, HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("problemas-categoria")
+    public ResponseEntity<?> getNumProblemasXCategoria(){
+        return new ResponseEntity<>(categoriaService.obtenerNumProblemasByCategoria(), HttpStatus.OK);
+
+    }
 }

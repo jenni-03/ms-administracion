@@ -2,6 +2,7 @@ package com.administracion.service;
 
 import com.administracion.dto.CategoriaDto;
 import com.administracion.dto.ExamenDto;
+import com.administracion.dto.ProblemasXCategoriaDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface CategoriaService {
     public CategoriaDto editarCategoria(int id, CategoriaDto categoriaDto);
 
     public boolean eliminarCategoria(int id);
+
+    public List<ProblemasXCategoriaDto> obtenerNumProblemasByCategoria();
 }
