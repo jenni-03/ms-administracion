@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-    @Query("SELECT c.tipo as categoria, COUNT(c.id) as cantidadProblemas " +
+    @Query("SELECT c.tipo as categoria, COUNT(p.id) as cantidadProblemas " +
             "FROM Categoria c " +
             "LEFT JOIN Problema p ON c.id = p.categoria.id " +
             "GROUP BY c.tipo " +
